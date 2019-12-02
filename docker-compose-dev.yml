@@ -28,10 +28,13 @@ services:
   
   backend:
     build: ./join-backend
-    command: bash -c "sbt stage && sbt seedDataProd && target/universal/stage/bin/sos -Dconfig.resource=/env/prod.conf -Dhttp.port=9000 -Dlogger.resource=logback.xml -Dplay.evolutions.db.default.autoApply=true -Dplay.http.secret.key='QCY?tAnfk?aZ?iwrNwnxIlR6CTf:G3gf:90Latabg@5241ABR5W:1uDFN];Ik@n'"
+    command: bash -c " sbt seedDataProd && target/universal/stage/bin/sos -Dconfig.resource=/env/prod.conf -Dhttp.port=9000 -Dlogger.resource=logback.xml -Dplay.evolutions.db.default.autoApply=true -Dplay.http.secret.key='QCY?tAnfk?aZ?iwrNwnxIlR6CTf:G3gf:90Latabg@5241ABR5W:1uDFN];Ik@n'"
     ports:
       - "9000:9000"
       - "9001:9001"
     depends_on:
       - database
-    
+    env_file:
+    - ./join-backend/.env
+    volumes:
+        - ./join-backend/env:/env
